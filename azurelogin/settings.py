@@ -153,10 +153,30 @@ AUTH_ADFS = {
     'CLIENT_SECRET': client_secret,
     'CLAIM_MAPPING': {'first_name': 'given_name',
                       'last_name': 'family_name',
-                      'email': 'upn'},
-    'GROUPS_CLAIM': 'roles',
-    'MIRROR_GROUPS': True,
-    'USERNAME_CLAIM': 'upn',
+                      'email': 'email'},
+    'USERNAME_CLAIM': 'given_name',
     'TENANT_ID': tenant_id,
     'RELYING_PARTY_ID': client_id,
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(name)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django_auth_adfs': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
 }
