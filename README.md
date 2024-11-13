@@ -116,11 +116,24 @@ asgi.py  __init__.py  settings.py  urls.py  wsgi.py
   * add `app` to `INSTALLED_APPS` in `settings.py`
   * create `app\urls.py`
     ```
+    from django.urls import path
+    from . import views
+
+    urlpatterns = [
+      path('', views.login_successful, name='login-view'),
+    ]
+
+    ```
+  * create `app\views.py`
+    ```
     from django.shortcuts import render
-    from django.http import HttpResponse
+    from django.http import HttpResponse,request
     # Create your views here.
     def login_successful(request):
-    return HttpResponse("200 ok")
+      if request.user.is_authenticated:
+        return HttpResponse(f"200 ok welcome:{request.user.username}")
+      else:
+        return HttpResponse(f"403 ")
     ```
   * update `urls.py` with new `urlpatters`
     - `path('', include('app.urls')),`
